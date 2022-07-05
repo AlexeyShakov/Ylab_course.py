@@ -13,15 +13,19 @@ def making_field(field: list):
 def human_step(input_value: str, field: list, field_copy: list):
 
     while True:
-        # проверим, что пользователь вводит корректное число
-        answer = int(input("На какой номер поставить " +  input_value + "?\n"))
-        if answer not in field:
-            print("Вы ввели неверный номер или этот номер занят, попробуйте еще раз")
+        try:
+            # проверим, что пользователь вводит корректное число
+            answer = int(input("На какой номер поставить " +  input_value + "?\n"))
+            if answer not in field:
+                print("Вы ввели неверный номер или этот номер занят, попробуйте еще раз")
+                continue
+            field[answer - 1] = input_value
+            # нужно, чтобы компьютер не делал слишком много повторных выборов. Поэтому удалем выбранный элемент из копии нашего игрового поля
+            field_copy.remove(answer)
+            break
+        except:
+            print("Вы ввели неверное значение")
             continue
-        field[answer - 1] = input_value
-        # нужно, чтобы компьютер не делал слишком много повторных выборов. Поэтому удалем выбранный элемент из копии нашего игрового поля
-        field_copy.remove(answer)
-        break
 
 # функция для выполнения шага компьютера
 def computer_step(input_value: str, field: list, field_copy: list, lose_combs: list):
