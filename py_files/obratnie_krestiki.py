@@ -115,7 +115,7 @@ def main():
     # flag == True означает, что первый ход делает пользователь, то есть крестиками
     flag = True
     while True:
-        question = input("Вы хотите начать крестиками? Введите 'да' или 'нет'\n")
+        question = input("Вы хотите ходить первым? Введите 'да' или 'нет'\n")
         if question.lower() not in ["да", "нет"]:
             print("Вы ввели неправильное значение. Введите 'да' или 'нет'")
             continue
@@ -141,7 +141,7 @@ def main():
                 if loser:
                     if counter % 2 == 0:
                         making_field(field)
-                        print("Ты проиграл!")
+                        print("Вы проиграли!")
                         break
                     else:
                         making_field(field)
@@ -165,7 +165,7 @@ def main():
                         break
                     else:
                         making_field(field)
-                        print("Ты проиграл!")
+                        print("Вы проиграли!")
                         break
         counter +=1
         # условие для ничьи
