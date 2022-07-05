@@ -24,13 +24,27 @@ def human_step(input_value: str, field: list, field_copy: list):
         break
 
 # функция для выполнения шага компьютера
-def computer_step(input_value: str, field: list, field_copy: list):
+def computer_step(input_value: str, field: list, field_copy: list, lose_combs: list):
 
-    # выбираем случайне число из списка
-    number = random.choice(field_copy)
+    """
+    сделаем наш компьютер похитрее, дадим ему шанс не выбирать проигрышное значение,
+    даже если есть варианты лучше
+    """
+    comp_counter = 0
+    while comp_counter <= 5:
+        # выбираем случайне число из списка
+        number = random.choice(field_copy)
+        field[number - 1] = input_value
+        # проверяем, будет ли этот шаг проигрышным для компьютера
+        loser = check_lose(field, lose_combs)
+        if loser:
+            field[number - 1] = number
+            comp_counter += 1
+            continue
+        else:
+            field_copy.remove(number)
+            break
     print("Компьютер выбрал значение - ", number)
-    field[number - 1] = input_value
-    field_copy.remove(number)
 
 
 """ найдем комбинации проигрышные комбинации. Данные код можно запустить один раз и просто скопировать результат в отдельную переменную. Мы можем так сделать
@@ -134,7 +148,7 @@ def main():
             if counter % 2 == 0:
                 human_step("X", field, field_copy)
             else:
-                computer_step("O", field, field_copy)
+                computer_step("O", field, field_copy, lose_combs)
             # делаем проверку на проигрышные комбинации
             if counter > 7:
                 loser = check_lose(field, lose_combs)
@@ -152,7 +166,7 @@ def main():
             making_field(field)
             # первым ходит компьютер
             if counter % 2 == 0:
-                computer_step("X", field, field_copy)
+                computer_step("X", field, field_copy, lose_combs)
             else:
                 human_step("O", field, field_copy)
             # проверяем проигрышные комбинации
