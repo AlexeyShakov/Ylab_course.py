@@ -1,38 +1,61 @@
 import itertools as it
 
-# create destinations
-points = {"Почтовое отделение": (0, 2),
-          "Ул. Грибоедова, 104/25": (2, 5),
-          "Ул. Бейкер стрит, 221б": (5, 2),
-          "Ул. Большая Садовая, 302-бис": (6, 6),
-          "Вечнозелёная Аллея, 742": (8, 3)}
 
-# create all possible combinations and leave only those which begin with 'Почтовое отделение'
-combinations =  [comb for comb in it.permutations(points.keys(), 5) if comb[0] == "Почтовое отделение"]
+def finding_the_shortest_way():
+    n = int(input("Сколько точек Вы хотите ввести?\n"))
 
-# we will put combinations and their distance value
-dist_dict = dict()
+    # создадим список, где будем хранить кортежи координат
+    points = [tuple([int(i) for i in input(
+        "Введите координаты точек через пробел. Первая точка должна быть почтовым отделением\n").split(" ")]) \
+              for i in range(n)]
 
-for comb in combinations:
-  dist = 0
-  for i in range(1, len(comb)):
-    dist += ((points.get(comb[i])[0] - points.get(comb[i-1])[0])**2 + (points.get(comb[i])[1] - points.get(comb[i-1])[1])**2)**0.5
+    # находим всевозможные комбинации перемещений почтальона и сразу фильтруем те, которые не начинаются с почтового отделения
+    combinations = [comb for comb in it.permutations(points, n) if comb[0] == points[0]]
 
-  # As the postman has to return to the initial point, we need to add the distance to that
-  dist += ((points.get("Почтовое отделение")[0] - points.get(comb[len(comb) - 1])[0])**2 + (points.get("Почтовое отделение")[1] - points.get(comb[len(comb) - 1])[1])**2)**0.5
-  dist_dict[comb] = dist
+    # создадим словарь и в него будем класть все комбинации и их суммарные длины
+    dist_dict = dict()
 
-# find the minimim value in dictionary
-min_val = min(dist_dict.values())
+    # найдем общее расстояние для каждой комбинации
+    for comb in combinations:
+        dist = 0
+        for i in range(1, len(comb)):
+            dist += ((comb[i][0] - comb[i - 1][0]) ** 2 + (comb[i][1] - comb[i - 1][1]) ** 2) ** 0.5
 
-# find keys with minimum values. Res is the list of tuples
-res = [k for k, v in dist_dict.items() if v==min_val]
+        dist += ((points[0][0] - comb[i][0]) ** 2 + (points[0][1] - comb[i][1]) ** 2) ** 0.5
+        dist_dict[comb] = dist
 
-for comb in res:
-  # we will put here all intermidiate distances between points
-  intermediate_dist = []
-  inter_dist = 0
-  for i in range(1, len(comb)):
-    inter_dist += ((points.get(comb[i])[0] - points.get(comb[i-1])[0])**2 + (points.get(comb[i])[1] - points.get(comb[i-1])[1])**2)**0.5
-    intermediate_dist.append(inter_dist)
-  print(f"{points[comb[0]]} -> {points[comb[1]]}[{intermediate_dist[0]}] -> {points[comb[2]]}[{intermediate_dist[1]}] -> {points[comb[3]]}[{intermediate_dist[2]}] -> {points[comb[4]]}[{intermediate_dist[3]}] -> {points[comb[0]]}[{min_val}] = {min_val}")
+    # найдем минимальное значение
+    min_val = min(dist_dict.values())
+
+    # найдем комбинации с наименьшим расстоянием. На случай, если у нас несколько таких маршрутов
+    res = [k for k, v in dist_dict.items() if v == min_val]
+
+    # найдем промежуточные расстояния между точками. Для этого заведем список списков, куда будем класть промежуточ. расстояния для каждой комбинации
+    intermediate_dist = [[] * i for i in range(len(res))]
+
+    # найдем промежуточные расстояния
+    for j in range(len(res)):
+        inter_dist = 0
+        for i in range(1, len(res[j])):
+            inter_dist += ((res[j][i][0] - res[j][i - 1][0]) ** 2 + (res[j][i][1] - res[j][i - 1][1]) ** 2) ** 0.5
+            intermediate_dist[j].append(inter_dist)
+
+    # выведем полученные результаты
+    for i in range(len(res)):
+        print(points[0], end=" ")
+        for j in range(1, len(res[i])):
+            print("->", res[i][j], intermediate_dist[i][j - 1], end=" ")
+        print(f"-> {points[0]}[{min_val}] = {min_val}")
+        print()
+
+
+while True:
+    finding_the_shortest_way()
+    question = input("Хотите найти кратчайшее расстояние для других точек? Введите 'да' или 'нет'\n")
+    if question.lower() == "да":
+        finding_the_shortest_way()
+    elif question.lower() == "нет":
+        break
+    else:
+        print("Введите 'да' или 'нет'")
+        continue
