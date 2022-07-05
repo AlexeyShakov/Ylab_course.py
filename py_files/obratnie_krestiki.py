@@ -35,7 +35,7 @@ def computer_step(input_value: str, field: list, field_copy: list, lose_combs: l
     даже если есть варианты лучше
     """
     comp_counter = 0
-    while comp_counter <= 5:
+    while comp_counter <= 3:
         # выбираем случайне число из списка
         number = random.choice(field_copy)
         field[number - 1] = input_value
