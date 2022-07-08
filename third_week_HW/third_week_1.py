@@ -7,10 +7,10 @@ def cashing_decorator(func) -> int:
         result = func(*args)
         # проверяем, есть ли такой результат функции в кэше
         if args in cash:
-            print("Если наш декоратор работает и значение есть в кэше, то это строка выведится на экран")
+            print(f"Если наш декоратор работает и значение параметра({args[0]}) есть в кэше, то эта строка выведится на экран")
             return cash[args]
         else:
-            print("Такого значения функции multiplier нет в кэше, поэтому записываем его туда")
+            print(f"Такого параметра({args[0]}) функции multiplier нет в кэше, поэтому записываем его туда")
             cash[args] = result
             return result
     return wrapper
@@ -20,8 +20,10 @@ def multiplier(number: int):
     return number * 2
 
 
-# создадим список, куда положим несколько значений, чтобы проверить работу нашего декоратора
-checking = [5, 5, 10, 10]
-for num in checking:
-    print(multiplier(num))
-print()
+
+if __name__ == "__main__":
+    # создадим список, куда положим несколько значений, чтобы проверить работу нашего декоратора
+    checking = [5, 5, 10, 10]
+    for num in checking:
+        print(multiplier(num))
+
