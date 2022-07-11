@@ -16,12 +16,12 @@ class Range2:
             self.current = 0
             return self.current
 
-        
+
 class CyclicIterator:
 
   def __init__(self, value):
       self.value = value
-      # создаем итератор
+      # Cоздаем итератор.
       self.iter = iter(self.value)
 
 
@@ -30,10 +30,10 @@ class CyclicIterator:
 
   def __next__(self):
     try:
-        # выводим элементы пока коллекция не станет пустой
+        # Выводим элементы пока коллекция не станет пустой.
         return(next(self.iter))
     except StopIteration:
-        # как только элементы в коллекции заканчиваются, мы должны заново создать итератор
+        # Как только элементы в коллекции заканчиваются, мы должны заново создать итератор.
         self.iter = iter(self.value)
         return next(self.iter)
 
@@ -46,8 +46,8 @@ Range2_example = CyclicIterator(Range2(3))
 
 if __name__ == "__main__":
     """ 
-    # возьмем range такой, чтобы показать, что объект итерируется по кругу после того, 
-    как в нем закончились эл-ты.
+    # Возьмем в цикле range такой, чтобы показать, что объект итерируется по кругу после того, 
+    как в нем закончились элементы.
     """
     for i in range(6):
         print("Список - ", next(list_example))
