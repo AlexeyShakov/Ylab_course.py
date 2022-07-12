@@ -13,12 +13,14 @@ class Movie:
         # Перебираем все диапазоны в списке.
         for i in range(len(self.dates)):
             # В каждом диапазоне ищем разницу в днях между концом и стартом.
-            for day in range((self.dates[i][1] - self.dates[i][0]).days + 1):
-                date = self.dates[i][0]
-                # Прибавляем к начальному дню разницу.
-                date += timedelta(days=day)
-                days.append(date)
-        return days
+            start = self.dates[i][0]
+            end = self.dates[i][1]
+            while start <= end:
+                yield start
+                start += timedelta(days=1)
+
+
+
 
 
 if __name__ == "__main__":
@@ -27,5 +29,7 @@ if __name__ == "__main__":
       (datetime(2020, 1, 15), datetime(2020, 2, 7))
     ])
 
+    print("Проверка, что данное выражение действительно генератор:\n", m.schedule())
+    print("-------------------")
     for d in m.schedule():
         print(d)

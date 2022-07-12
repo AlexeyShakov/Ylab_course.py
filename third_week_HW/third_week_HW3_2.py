@@ -25,7 +25,7 @@ def decorator_params(call_count=2, start_sleep_time=5, factor=2, border_sleep_ti
         return wrapper
     return decorator
 
-@decorator_params(call_count=3)
+@decorator_params(call_count=5, start_sleep_time=1)
 def function():
     print("Функция работает.")
 
