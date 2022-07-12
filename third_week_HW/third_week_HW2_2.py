@@ -8,11 +8,9 @@ class Movie:
     dates: List[Tuple[datetime, datetime]]
 
     def schedule(self) -> Generator[datetime, None, None]:
-        # Создаем список, куда будем класть даты в заданном диапазоне.
-        days = []
         # Перебираем все диапазоны в списке.
         for i in range(len(self.dates)):
-            # В каждом диапазоне ищем разницу в днях между концом и стартом.
+            # Сохраняем начало и конец диапазона в переменные
             start = self.dates[i][0]
             end = self.dates[i][1]
             while start <= end:
@@ -25,7 +23,6 @@ if __name__ == "__main__":
       (datetime(2020, 1, 1), datetime(2020, 1, 7)),
       (datetime(2020, 1, 15), datetime(2020, 2, 7))
     ])
-
     print("Проверка, что данное выражение действительно генератор:\n", m.schedule())
     print("-------------------")
     for d in m.schedule():
