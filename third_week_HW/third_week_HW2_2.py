@@ -20,9 +20,6 @@ class Movie:
                 start += timedelta(days=1)
 
 
-
-
-
 if __name__ == "__main__":
     m = Movie('sw', [
       (datetime(2020, 1, 1), datetime(2020, 1, 7)),
