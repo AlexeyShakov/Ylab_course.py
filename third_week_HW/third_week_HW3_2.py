@@ -5,6 +5,9 @@ def decorator_params(call_count=2, start_sleep_time=5, factor=2, border_sleep_ti
         def wrapper(*args):
             print(f"Количество запусков = call_count({call_count}).")
             print("Начало работы.")
+            print("Вызов функции без задержки:")
+            func()
+            print("Повторные вызовы функции:")
             for exp in range(0,call_count):
                 # Время ожидания запуска функции
                 t = start_sleep_time * factor ** exp
@@ -13,7 +16,7 @@ def decorator_params(call_count=2, start_sleep_time=5, factor=2, border_sleep_ti
                 else:
                     t = border_sleep_time
                     time.sleep(t)
-                print(f"Запуск номер {exp}. Ожидание {t} секунд. Результат работы декорируемой функции =", end=" ")
+                print(f"Запуск номер {exp+1}. Ожидание {t} секунд. Результат работы декорируемой функции =", end=" ")
                 value = func()
             print("Конец работы.")
             return value
