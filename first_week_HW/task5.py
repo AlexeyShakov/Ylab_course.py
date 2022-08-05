@@ -1,12 +1,12 @@
 import itertools as it
 import math
 
-def calculating_number(bases, values, limit):
+def calculating_number(bases, values):
 
-  number = 1
-  for base in range(len(bases)):
-    number *= bases[base]**int(values[base])
-  return number
+    number = 1
+    for base in range(len(bases)):
+        number *= bases[base]**int(values[base])
+    return number
 
 def count_find_num(primesL, limit):
 
@@ -30,7 +30,7 @@ def count_find_num(primesL, limit):
     spisok = []
     for i in combinations:
         # print(i)
-        num = calculating_number(primesL, i, limit)
+        num = calculating_number(primesL, i)
         spisok.append(num)
 
     # leave numbers less than limit

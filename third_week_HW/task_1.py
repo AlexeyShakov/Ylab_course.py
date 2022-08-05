@@ -1,4 +1,4 @@
-def cashing_decorator(func) -> int:
+def cashing_decorator(func):
 
     # Создаем словарик(кэш), куда будем складывать результаты работы функции.
     cash = {}
